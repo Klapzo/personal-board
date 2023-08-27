@@ -7,8 +7,8 @@ const TransactionProvider = ({ children }) => {
   const [name, setName] = useState('')
   const [updateTransactions, setUpdateTransactions] = useState('')
   const [activeType, setActiveType] = useState('')
-  const [selectedCategories, setSelectedCategories] = useState(['otros'])
-  const categoryList = ['cariñosas', 'fijos', 'pizzaM', 'nose', 'compu', 'cafe', 'otros']
+  const [selectedCategories, setSelectedCategories] = useState(new Set([]))
+  const categoryList = ['cariñosas', 'fijos', 'pizzaM', 'nose', 'compu', 'cafe']
   const [quantity, setQuantity] = useState('')
   const [currency, setCurrency] = useState('ARS')
   const [inputDate, setInputDate] = useState(new Date())
