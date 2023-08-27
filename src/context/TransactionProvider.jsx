@@ -1,49 +1,101 @@
-import React, { createContext, useContext, useEffect, useState } from 'react'
-import { AddTransaction } from '../utils/fetchDatabase'
+import React, { createContext, useContext, useEffect, useReducer } from 'react'
+import { AddTransaction, deleteTransaction, getAllTransactions } from '../utils/fetchDatabase'
+import { initialState, reducer } from '../reducers/Transaction'
 
 export const AddTransactionContext = createContext()
 
 const TransactionProvider = ({ children }) => {
-  const [name, setName] = useState('')
-  const [updateTransactions, setUpdateTransactions] = useState('')
-  const [activeType, setActiveType] = useState('')
-  const [selectedCategories, setSelectedCategories] = useState(new Set([]))
-  const categoryList = ['cariñosas', 'fijos', 'pizzaM', 'nose', 'compu', 'cafe']
-  const [quantity, setQuantity] = useState('')
-  const [currency, setCurrency] = useState('ARS')
-  const [inputDate, setInputDate] = useState(new Date())
-  const [isValid, setIsValid] = useState(false)
+  const [state, dispatch] = useReducer(reducer, initialState)
+
+  const setName = (name) => dispatch({ type: 'SET_NAME', payload: name })
+  const setIsLoading = (isLoading) =>
+    dispatch({ type: 'SET_IS_LOADING', payload: isLoading })
+  const setActiveType = (activeType) => dispatch({ type: 'SET_ACTIVE_TYPE', payload: activeType })
+  const setSelectedCategories = (selectedCategories) =>
+    dispatch({ type: 'SET_SELECTED_CATEGORIES', payload: selectedCategories })
+  const setQuantity = (quantity) => dispatch({ type: 'SET_QUANTITY', payload: quantity })
+  const setCurrency = (currency) => dispatch({ type: 'SET_CURRENCY', payload: currency })
+  const setInputDate = (inputDate) => dispatch({ type: 'SET_INPUT_DATE', payload: inputDate })
+  const setIsValid = (isValid) => dispatch({ type: 'SET_IS_VALID', payload: isValid })
+  const setTransactions = (transactions) => dispatch({ type: 'SET_TRANSACTIONS', payload: transactions })
 
   useEffect(() => {
     validateInputs()
-  }, [name, activeType, selectedCategories, quantity])
+  }, [state.name, state.activeType, state.selectedCategories, state.quantity])
 
   function validateInputs () {
-    if (name && activeType && selectedCategories && quantity) setIsValid(true)
+    if (state.name && state.activeType && state.selectedCategories && state.quantity) setIsValid(true)
     else setIsValid(false)
   }
 
   function createTransaction () {
-    const categoriesArray = Array.from(selectedCategories)
+    const categoriesArray = Array.from(state.selectedCategories)
     const newTransaction = [{
-      name,
-      transaction_type: activeType,
+      name: state.name,
+      transaction_type: state.activeType,
       categories: categoriesArray,
-      quantity,
-      currency,
-      date: inputDate.toISOString().split('T')[0]
+      quantity: state.quantity,
+      currency: state.currency,
+      date: state.inputDate.toISOString().split('T')[0]
     }]
     return newTransaction
   }
 
   async function handleSubmit () {
+    setIsLoading(true)
     const transaction = createTransaction()
     await AddTransaction(transaction)
-    setUpdateTransactions(transaction)
+    setIsLoading(false)
+  }
+  async function handleDelete (id) {
+    setIsLoading(true)
+    await deleteTransaction(id)
+    setIsLoading(false)
+  }
+
+  async function getData () {
+    const result = await getAllTransactions()
+    const transactionObj = result.map(movimiento => {
+      movimiento.categories = movimiento.categories.map((item) => ({
+        key: item,
+        label: item
+      }))
+      return movimiento
+    })
+    transactionObj.sort((a, b) => {
+      const da = new Date(a.date)
+      const db = new Date(b.date)
+      return db - da
+    })
+    setTransactions(transactionObj)
+    setIsLoading(false)
   }
 
   return (
-      <AddTransactionContext.Provider value={{ updateTransactions, setUpdateTransactions, isValid, inputDate, setInputDate, currency, setCurrency, quantity, setQuantity, categoryList, selectedCategories, setSelectedCategories, activeType, setActiveType, name, setName, AddTransaction, handleSubmit }}>
+      <AddTransactionContext.Provider value={{
+        isLoading: state.isLoading,
+        setIsLoading,
+        isValid: state.isValid,
+        inputDate: state.inputDate,
+        setInputDate,
+        currency: state.currency,
+        setCurrency,
+        quantity: state.quantity,
+        setQuantity,
+        categoryList: state.categoryList,
+        selectedCategories: state.selectedCategories,
+        setSelectedCategories,
+        activeType: state.activeType,
+        setActiveType,
+        name: state.name,
+        setName,
+        AddTransaction,
+        handleSubmit,
+        handleDelete,
+        getData,
+        transactions: state.transactions,
+        setTransactions
+      }}>
           {children}
       </AddTransactionContext.Provider>
   )

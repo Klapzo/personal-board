@@ -35,7 +35,7 @@ export const useRenderCell = () => {
       case 'categories':
         return (
             <>
-                {movimiento.categories
+                {movimiento.categories.length
                   ? <Dropdown aria-label='categories dropdown' isDisabled>
                       <DropdownTrigger >
                           <Chip
@@ -60,7 +60,7 @@ export const useRenderCell = () => {
 
                       </DropdownMenu>
                   </Dropdown>
-                  : '...'
+                  : 'varios'
                 }
             </>
         )
