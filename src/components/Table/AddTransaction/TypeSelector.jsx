@@ -17,12 +17,12 @@ const TypeSelector = () => {
           <ButtonGroup size='sm' className=' border-primary-50 rounded-lg transaction-colors'>
               {buttonNames.map(button => (
                   <Button
-                  className='w-full'
-              onPress={() => handlePress(button)}
-              variant={activeType === button ? 'shadow' : 'flat'}
-              key={button}
-              color={buttonColorMap[button]}
-              >
+                    className='w-full'
+                    onPress={() => handlePress(button)}
+                    variant={activeType === button ? 'shadow' : 'flat'}
+                    key={button}
+                    color={buttonColorMap[button]}
+                    >
                       {button}
                   </Button>
               ))}

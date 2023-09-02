@@ -10,9 +10,9 @@ import {
 
 } from '@nextui-org/react'
 import { columns } from './tableData'
-import AddTransaction from './AddTransaction/AddTransaction'
 import { useTransaction } from '../../context/TransactionProvider'
 import { useRenderCell } from './useRenderCell'
+import MainModal from './MainModal'
 
 const MainTable = () => {
   const { isLoading, transactions, getData, handleDelete } = useTransaction()
@@ -27,7 +27,7 @@ const MainTable = () => {
 
   return (
       <div className='flex flex-col  gap-3 w-[70%] my-10'>
-          <AddTransaction/>
+          <MainModal/>
 
           <Table
 
