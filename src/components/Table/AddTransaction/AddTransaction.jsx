@@ -28,10 +28,10 @@ const AddTransaction = () => {
           <Modal size="xs" isOpen={isOpen} onOpenChange={onOpenChange}>
               <ModalContent>
                   <ModalHeader>Agregar Movimiento</ModalHeader>
-                  <Divider className="mb-5"/>
+                  <Divider />
 
                   <ModalBody>
-                      <div className='flex flex-col gap-6 max-w-12 items-start'>
+                      <div className='flex flex-col gap-y-5 items-start'>
                           <NameInput />
                           <TypeSelector />
                           <CategorySelector />
