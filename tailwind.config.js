@@ -17,6 +17,7 @@ export default {
   // const buttonColorMap = { Gasto: 'danger', Ahorro: 'secondary'}
 
   plugins: [nextui({
+    darkMode: 'class',
     addCommonColors: true,
     themes: {
       'transaction-colors': {
