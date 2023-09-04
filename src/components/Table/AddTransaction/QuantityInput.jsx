@@ -16,7 +16,6 @@ const QuantityInput = () => {
           <Input
             value={quantity}
             onChange={e => setQuantity(e.target.value)}
-            className='w-[10rem]'
             isRequired
             label="Monto Total"
             placeholder="0.00"

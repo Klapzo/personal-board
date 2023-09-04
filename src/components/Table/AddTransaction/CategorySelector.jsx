@@ -6,7 +6,7 @@ const CategorySelector = () => {
   const { selectedCategories, setSelectedCategories, categoryList } = useTransaction()
 
   return (
-      <div className="flex w-full max-w-xs flex-col gap-2">
+      <div className="flex w-full max-w-xs items-end dark flex-row gap-2">
           <Select
         label="Categorías"
         selectionMode="multiple"
@@ -21,9 +21,9 @@ const CategorySelector = () => {
                       {category}
                   </SelectItem>
               ))}
+
           </Select>
-      </div>
-  )
+      </div>)
 }
 
 export default CategorySelector

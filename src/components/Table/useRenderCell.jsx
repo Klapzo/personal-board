@@ -109,7 +109,7 @@ export const useRenderCell = () => {
                             <ActionsDropdownItem aria-label="delete"
                              icon={ <FaTrash className={cn('text-danger')} /> }
                              text="Eliminar movimiento"
-                             color="default"/>
+                             color="danger"/>
                         </DropdownItem>
 
                     </DropdownMenu>
