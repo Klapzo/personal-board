@@ -3,6 +3,7 @@ import AddTransaction from './AddTransaction/AddTransaction'
 import { Button, Divider, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Tab, Tabs, useDisclosure } from '@nextui-org/react'
 import { useTransaction } from '../../context/TransactionProvider'
 import { FaPlus } from 'react-icons/fa'
+import AddCategory from './AddCategory/AddCategory'
 
 const MainModal = () => {
   const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure()
@@ -13,7 +14,7 @@ const MainModal = () => {
       <>
           <Button onPress={onOpen} color="primary" endContent={<FaPlus/>}>Agregar movimiento</Button>
 
-          <Modal size="xs" className='h-[39em]' isOpen={isOpen} onOpenChange={onOpenChange}>
+          <Modal size="xs" className='h-[36em]' isOpen={isOpen} onOpenChange={onOpenChange}>
               <ModalContent>
                   <ModalHeader className='flex gap-2 flex-col items-center'>
 
@@ -28,6 +29,7 @@ const MainModal = () => {
                   <Divider />
                   <ModalBody >
                       {selectedKey === 'transaction' && <AddTransaction/>}
+                      {selectedKey === 'category' && <AddCategory/>}
                   </ModalBody>
                   <ModalFooter>
                       <Button color="danger" onClick={onClose}>
