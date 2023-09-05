@@ -1,9 +1,10 @@
 import { useCallback } from 'react'
 import { Dropdown, DropdownTrigger, Chip, DropdownMenu, DropdownItem, Button, cn } from '@nextui-org/react'
-import CategoryBadge from './CategoryBadge'
+import CategoryBadge from '../components/Table/CategoryBadge'
 import { FaEye, FaEdit, FaTrash } from 'react-icons/fa'
 import { HiDotsVertical } from 'react-icons/hi'
-import ActionsDropdownItem from './ActionsDropdownItem'
+import ActionsDropdownItem from '../components/Table/ActionsDropdownItem'
+import { useTransaction } from '../context/TransactionProvider'
 
 const statusColorMap = {
   ingreso: 'warning',
@@ -12,9 +13,10 @@ const statusColorMap = {
   inversión: 'primary'
 }
 export const useRenderCell = () => {
-  const renderCell = useCallback((movimiento, columnKey, handleDelete) => {
-    const cellValue = movimiento[columnKey]
+  const { handleDelete } = useTransaction()
 
+  const renderCell = useCallback((movimiento, columnKey) => {
+    const cellValue = movimiento[columnKey]
     switch (columnKey) {
       case 'id':
         break

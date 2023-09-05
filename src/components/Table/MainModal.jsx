@@ -4,15 +4,17 @@ import { Button, Divider, Modal, ModalBody, ModalContent, ModalFooter, ModalHead
 import { useTransaction } from '../../context/TransactionProvider'
 import { FaPlus } from 'react-icons/fa'
 import AddCategory from './AddCategory/AddCategory'
+import { useAuth } from '../../hooks/useAuth'
 
 const MainModal = () => {
   const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure()
   const { handleSubmit, isValid } = useTransaction()
   const [selectedKey, setSelectedKey] = useState('transaction')
+  const { session } = useAuth()
 
   return (
       <>
-          <Button onPress={onOpen} color="primary" endContent={<FaPlus/>}>Agregar movimiento</Button>
+          <Button isDisabled={!session} onPress={onOpen} color="primary" endContent={<FaPlus/>}>Agregar movimiento</Button>
 
           <Modal size="xs" className='h-[36em]' isOpen={isOpen} onOpenChange={onOpenChange}>
               <ModalContent>

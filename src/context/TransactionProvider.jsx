@@ -1,11 +1,13 @@
 import React, { createContext, useContext, useEffect, useReducer } from 'react'
 import { AddTransaction, deleteTransaction, getAllTransactions } from '../utils/fetchDatabase'
 import { initialState, reducer } from '../reducers/Transaction'
+import { useAuth } from '../hooks/useAuth'
 
 export const AddTransactionContext = createContext()
 
 const TransactionProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState)
+  const { session } = useAuth()
 
   const setName = (name) => dispatch({ type: 'SET_NAME', payload: name })
   const setIsLoading = (isLoading) =>
@@ -36,7 +38,8 @@ const TransactionProvider = ({ children }) => {
       categories: categoriesArray,
       quantity: state.quantity,
       currency: state.currency,
-      date: state.inputDate.toISOString().split('T')[0]
+      date: state.inputDate.toISOString().split('T')[0],
+      owner_id: session.user.id
     }]
     return newTransaction
   }
@@ -47,6 +50,7 @@ const TransactionProvider = ({ children }) => {
     await AddTransaction(transaction)
     setIsLoading(false)
   }
+
   async function handleDelete (id) {
     setIsLoading(true)
     await deleteTransaction(id)
