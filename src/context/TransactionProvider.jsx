@@ -1,5 +1,5 @@
-import React, { createContext, useContext, useEffect, useReducer } from 'react'
-import { AddTransaction, deleteTransaction, getAllTransactions } from '../utils/fetchDatabase'
+import React, { createContext, useContext, useEffect, useReducer, useState } from 'react'
+import { AddTransaction, deleteTransaction, getAllTransactions, getQuantities } from '../utils/fetchDatabase'
 import { initialState, reducer } from '../reducers/Transaction'
 import { useAuth } from '../hooks/useAuth'
 
@@ -20,6 +20,9 @@ const TransactionProvider = ({ children }) => {
   const setInputDate = (inputDate) => dispatch({ type: 'SET_INPUT_DATE', payload: inputDate })
   const setIsValid = (isValid) => dispatch({ type: 'SET_IS_VALID', payload: isValid })
   const setTransactions = (transactions) => dispatch({ type: 'SET_TRANSACTIONS', payload: transactions })
+
+  const [quantitiesDataset, setQuantitiesDataset] = useState([0, 0, 0])
+  const [balance, setBalance] = useState(0)
 
   useEffect(() => {
     validateInputs()
@@ -77,8 +80,28 @@ const TransactionProvider = ({ children }) => {
     setIsLoading(false)
   }
 
+  async function updateQuantities () {
+    const data = await getQuantities()
+    const quantitiesObj = { Gasto: 0, Ahorro: 0, Ingreso: 0, Inversión: 0, Balance: 0 }
+    data.forEach((transaction) => {
+      const key = transaction.transaction_type
+      const value = transaction.quantity
+
+      if (key in quantitiesObj) {
+        quantitiesObj[key] += value
+      } else {
+        quantitiesObj[key] = value
+      }
+    })
+    quantitiesObj.Balance = quantitiesObj.Ingreso - (quantitiesObj['Inversión'] + quantitiesObj.Gasto + quantitiesObj.Ahorro)
+    setBalance(quantitiesObj.Balance)
+    setQuantitiesDataset([quantitiesObj.Gasto, quantitiesObj.Ahorro, quantitiesObj['Inversión']])
+  }
+
   return (
       <AddTransactionContext.Provider value={{
+        quantitiesDataset,
+        balance,
         isLoading: state.isLoading,
         setIsLoading,
         isValid: state.isValid,
@@ -100,6 +123,7 @@ const TransactionProvider = ({ children }) => {
         handleDelete,
         getData,
         transactions: state.transactions,
+        updateQuantities,
         setTransactions
       }}>
           {children}
