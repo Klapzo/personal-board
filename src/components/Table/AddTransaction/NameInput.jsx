@@ -6,7 +6,7 @@ const NameInput = () => {
   return (
       <div className='flex flex-col w-full'>
 
-          <Input type="text" value={name} onChange={e => setName(e.target.value)} isRequired label="Nombre" placeholder='nombre' labelPlacement="outside" />
+          <Input type="text" value={name} onChange={e => setName(e.target.value)} label="Nota" placeholder='agrega una nota a tu movimiento' labelPlacement="outside" />
       </div>
   )
 }

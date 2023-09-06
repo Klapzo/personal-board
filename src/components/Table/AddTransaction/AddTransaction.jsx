@@ -9,10 +9,10 @@ const AddTransaction = () => {
   return (
 
       <div className='flex flex-col gap-y-2 items-start'>
-          <NameInput />
+          <QuantityInput />
           <TypeSelector />
           <CategorySelector />
-          <QuantityInput />
+          <NameInput />
           <DateInput />
       </div>
 

@@ -22,7 +22,7 @@ export const useRenderCell = () => {
         break
       case 'quantity':
         return (
-            <h2 className={`text-${statusColorMap[movimiento.transaction_type.toLowerCase()]} font-xl font-semibold`}>{movimiento.quantity}</h2>
+            <h2 className={`text-${statusColorMap[movimiento.transaction_type.toLowerCase()]} font-xl w-12 font-semibold`}>{movimiento.quantity}</h2>
         )
       case 'currency':
         return (
@@ -31,7 +31,7 @@ export const useRenderCell = () => {
       case 'name':
         return (
             <>
-                <h1 className='text-lg'>{movimiento.name}</h1>
+                <h5 className='text-md'>{movimiento.name}</h5>
             </>
         )
       case 'categories':
