@@ -25,3 +25,11 @@ export const deleteTransaction = async (id) => {
 
   error && console.error(error)
 }
+
+export const getQuantities = async () => {
+  const { data: Movimientos, error } = await supabase
+    .from('Movimientos')
+    .select('transaction_type,quantity')
+  error && console.error(error)
+  return Movimientos
+}

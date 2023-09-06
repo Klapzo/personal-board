@@ -13,7 +13,7 @@ const MainModal = () => {
   const { session } = useAuth()
 
   return (
-      <div className='w-full h-full'>
+      <div className='w-full '>
           <Button isDisabled={!session} onPress={onOpen} color="primary" endContent={<FaPlus/>}>Agregar movimiento</Button>
 
           <Modal size="xs" className='h-[36em]' isOpen={isOpen} onOpenChange={onOpenChange}>
