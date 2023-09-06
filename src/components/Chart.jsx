@@ -1,10 +1,12 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Doughnut } from 'react-chartjs-2'
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js'
 import { useTransaction } from '../context/TransactionProvider'
+
 ChartJS.register(ArcElement, Tooltip, Legend)
 function Chart () {
-  const { transactions, isLoading, quantitiesDataset, updateQuantities } = useTransaction()
+  const { isLoading, quantities, updateQuantities } = useTransaction()
+  const [quantitiesDataset, setQuantitiesDataset] = useState([0, 0, 0])
 
   const colorMap = {
     background: { gastos: '#5f2b1f', ahorros: '#251238', inversiones: '#004c3d' },
@@ -25,12 +27,22 @@ function Chart () {
   }
   useEffect(() => {
     updateQuantities()
-  }, [transactions, isLoading])
+    setQuantitiesDataset([quantities.Gasto, quantities.Ahorro, quantities['Inversión']])
+  }, [quantities, isLoading])
 
   return (
-      <div className='flex flex-col gap-2 text-center'>
+      <div>
           <Doughnut
     data={data}
+    options={ {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: 'bottom'
+        }
+
+      }
+    }}
 
     />
       </div>

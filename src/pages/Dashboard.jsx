@@ -5,10 +5,9 @@ import BalanceCard from '../components/BalanceCard'
 function Dashboard () {
   return (
       <TransactionProvider>
-          <div className='w-1/1'></div>
           <main className='flex flex-row h-70 gap-16 items-center justify-center bg-color-[#151515]'>
 
-              <div className='h-42'>
+              <div className='h-42 w-80 flex mt-2 flex-col gap-2'>
                   <Chart/>
                   <BalanceCard/>
               </div>

@@ -10,26 +10,23 @@ const TransactionProvider = ({ children }) => {
   const { session } = useAuth()
 
   const setName = (name) => dispatch({ type: 'SET_NAME', payload: name })
-  const setIsLoading = (isLoading) =>
-    dispatch({ type: 'SET_IS_LOADING', payload: isLoading })
+  const setIsLoading = (isLoading) => dispatch({ type: 'SET_IS_LOADING', payload: isLoading })
   const setActiveType = (activeType) => dispatch({ type: 'SET_ACTIVE_TYPE', payload: activeType })
-  const setSelectedCategories = (selectedCategories) =>
-    dispatch({ type: 'SET_SELECTED_CATEGORIES', payload: selectedCategories })
+  const setSelectedCategories = (selectedCategories) => dispatch({ type: 'SET_SELECTED_CATEGORIES', payload: selectedCategories })
   const setQuantity = (quantity) => dispatch({ type: 'SET_QUANTITY', payload: quantity })
   const setCurrency = (currency) => dispatch({ type: 'SET_CURRENCY', payload: currency })
   const setInputDate = (inputDate) => dispatch({ type: 'SET_INPUT_DATE', payload: inputDate })
   const setIsValid = (isValid) => dispatch({ type: 'SET_IS_VALID', payload: isValid })
   const setTransactions = (transactions) => dispatch({ type: 'SET_TRANSACTIONS', payload: transactions })
 
-  const [quantitiesDataset, setQuantitiesDataset] = useState([0, 0, 0])
-  const [balance, setBalance] = useState(0)
+  const [quantities, setQuantities] = useState({})
 
   useEffect(() => {
     validateInputs()
   }, [state.name, state.activeType, state.selectedCategories, state.quantity])
 
   function validateInputs () {
-    if (state.name && state.activeType && state.selectedCategories && state.quantity) setIsValid(true)
+    if (state.activeType && state.selectedCategories && state.quantity) setIsValid(true)
     else setIsValid(false)
   }
 
@@ -94,14 +91,12 @@ const TransactionProvider = ({ children }) => {
       }
     })
     quantitiesObj.Balance = quantitiesObj.Ingreso - (quantitiesObj['Inversión'] + quantitiesObj.Gasto + quantitiesObj.Ahorro)
-    setBalance(quantitiesObj.Balance)
-    setQuantitiesDataset([quantitiesObj.Gasto, quantitiesObj.Ahorro, quantitiesObj['Inversión']])
+    setQuantities(quantitiesObj)
   }
 
   return (
       <AddTransactionContext.Provider value={{
-        quantitiesDataset,
-        balance,
+        quantities,
         isLoading: state.isLoading,
         setIsLoading,
         isValid: state.isValid,
