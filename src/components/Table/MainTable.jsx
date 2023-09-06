@@ -19,16 +19,14 @@ const MainTable = () => {
   const { isLoading, transactions, getData } = useTransaction()
   const RenderCell = useRenderCell()
   const { session } = useAuth()
-
   useEffect(() => {
-    const func = async () => {
-      await getData()
+    async function fetch () {
+      getData()
     }
-    func()
-  }, [isLoading])
-
+    fetch()
+  }, [])
   return (
-      <div className='flex flex-col  gap-3 w-[70%] my-10'>
+      <div className='flex flex-col h-full  gap-3 w-[70%] my-10'>
           <MainModal/>
 
           <Table

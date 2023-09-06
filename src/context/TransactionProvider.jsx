@@ -48,12 +48,14 @@ const TransactionProvider = ({ children }) => {
     setIsLoading(true)
     const transaction = createTransaction()
     await AddTransaction(transaction)
+    await getData()
     setIsLoading(false)
   }
 
   async function handleDelete (id) {
     setIsLoading(true)
     await deleteTransaction(id)
+    await getData()
     setIsLoading(false)
   }
 
