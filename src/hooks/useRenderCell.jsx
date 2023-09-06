@@ -22,16 +22,19 @@ export const useRenderCell = () => {
         break
       case 'quantity':
         return (
-            <h2 className={`text-${statusColorMap[movimiento.transaction_type.toLowerCase()]} font-xl w-12 font-semibold`}>{movimiento.quantity}</h2>
+            <div className='flex flex-row justify-between'>
+                <p className={`text-${statusColorMap[movimiento.transaction_type.toLowerCase()]} text-lg font-semibold text-end`}>$ {movimiento.quantity}</p>
+                <p className='text-default-500'>{movimiento.currency}</p>
+            </div>
         )
       case 'currency':
         return (
-            <p>{movimiento.currency ? movimiento.currency : 'AR$' }</p>
+            <></>
         )
       case 'name':
         return (
             <>
-                <h5 className='text-md'>{movimiento.name}</h5>
+                <p className='text-md'>{movimiento.name}</p>
             </>
         )
       case 'categories':
@@ -41,19 +44,22 @@ export const useRenderCell = () => {
                   ? <Dropdown aria-label='categories dropdown' isDisabled>
                       <DropdownTrigger >
                           <Chip
-                            endContent={movimiento.categories[1] && <CategoryBadge number={movimiento.categories.length}/>}
-                            className="flex flex-row gap-5 min-w-5 text-center cursor-pointer place-content-around"
+                            endContent={movimiento.categories[1] &&
+                            <CategoryBadge number={movimiento.categories.length}/>}
+                            className="flex flex-row gap-5 min-w-6 cursor-pointer"
                             radius="sm"
-                            color='white' size="lg" variant="flat"
-                            aria-label="categories "
+                            color='default'
+                            size="md" variant="flat"
+                            aria-label="categories"
                             >
-
-                              {movimiento.categories[0].label}
+                              <p className='text-md'>
+                                  {movimiento.categories[0].label}
+                              </p>
                           </Chip>
                       </DropdownTrigger>
                       <DropdownMenu isDisabled aria-label="categories menu" items={movimiento.categories}>
                           {(categoria) =>
-                            (<DropdownItem aria-label={categoria.name} showDivider isReadOnly key={categoria.key}>
+                            (<DropdownItem className='cursor-default' aria-label={categoria.name} isReadOnly key={categoria.key}>
 
                                 {categoria.label}
 
@@ -62,31 +68,39 @@ export const useRenderCell = () => {
 
                       </DropdownMenu>
                   </Dropdown>
-                  : 'varios'
+                  : <Chip
+                  radius="sm"
+                  color='default'
+                  size="md" variant="flat"
+                  aria-label="categories">
+                      varios
+                  </Chip>
                 }
             </>
         )
 
       case 'date':
         return (
-            <p className="capitalize" color="default" size="sm" >
+            <p className="capitalize text-center" color="default" size="sm" >
                 {cellValue}
             </p>
         )
       case 'transaction_type':
         return (
-            <Chip
-            aria-label='transaction type'
-            className="capitalize "
-            color={statusColorMap[movimiento.transaction_type.toLowerCase()]}
-            size="sm"
-            variant="flat">
-                {cellValue}
-            </Chip>
+            <div className='flex justify-center'>
+                <Chip
+                aria-label='transaction type'
+                className="capitalize"
+                color={statusColorMap[movimiento.transaction_type.toLowerCase()]}
+                size="sm"
+                variant="flat">
+                    {cellValue}
+                </Chip>
+            </div>
         )
       case 'actions':
         return (
-            <div className="relative flex justify-enditems-center gap-2">
+            <div className="relative flex justify-end items-center">
                 <Dropdown aria-label='details dropdown'>
 
                     <DropdownTrigger aria-label="details">
