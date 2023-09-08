@@ -13,7 +13,7 @@ const TypeSelector = () => {
   }
   return (
       <div className='flex flex-col w-full gap-2'>
-          <label htmlFor="ButtonGroup" className='font-bold text-sm'>Tipo de movimiento:</label>
+          <label htmlFor="ButtonGroup" className='font-bold text-sm'>Tipo de movimiento</label>
           <ButtonGroup size='sm' className=' border-primary-50 rounded-lg transaction-colors'>
               {buttonNames.map(button => (
                   <Button

@@ -26,8 +26,7 @@ const DateInput = () => {
   return (
       <div className="flex flex-row w-full justify-between items-center ">
           <Input variant='outside' placeholder="none" value={new Date(inputDate).toISOString().split('T')[0]} type="date" label="Fecha"
-          className='w-[8rem]'
-          isRequired
+          className='w-[8rem] icon-primary'
           labelPlacement="outside"
           description={dateDiff}/>
 

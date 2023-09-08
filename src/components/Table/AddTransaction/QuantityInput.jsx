@@ -9,27 +9,24 @@ const QuantityInput = () => {
   const handlePress = () => {
     setShowInstallmentMenu(prev => !prev)
   }
-
+  const inputStepMap = { USD: 0.5, EUR: 0.5, ARS: 50 }
+  const currencySymbolMap = { USD: '$', EUR: '€', ARS: '$' }
   return (
       <div className='flex flex-row gap-2 w-full justify-between items-end '>
 
           <Input
             value={quantity}
             onChange={e => setQuantity(e.target.value)}
-            isRequired
             label="Monto Total"
             placeholder="0.00"
             labelPlacement="outside"
             startContent={
                 <div className="pointer-events-none flex items-center">
-                    <span className="text-default-400 text-small">$</span>
+                    <span className="text-primary-300 text-small">{currencySymbolMap[currency]}</span>
                 </div>
         }
         endContent={
             <div className="flex items-center">
-                <label className="sr-only" htmlFor="currency">
-                    Currency
-                </label>
                 <select
                 className="outline-none border-0 bg-transparent text-default-400 text-small"
                 id="currency"
@@ -44,6 +41,8 @@ const QuantityInput = () => {
             </div>
         }
         type="number"
+        min="0"
+        step={inputStepMap[currency]}
 
         />
           <Button onPress={handlePress} isDisabled color='primary'>Cuotas?</Button>

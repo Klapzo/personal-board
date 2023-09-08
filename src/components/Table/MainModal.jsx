@@ -13,7 +13,7 @@ const MainModal = () => {
   const { session } = useAuth()
 
   return (
-      <div className='w-full h-full'>
+      <div className='w-full '>
           <Button isDisabled={!session} onPress={onOpen} color="primary" endContent={<FaPlus/>}>Agregar movimiento</Button>
 
           <Modal size="xs" className='h-[36em]' isOpen={isOpen} onOpenChange={onOpenChange}>
@@ -34,12 +34,15 @@ const MainModal = () => {
                       {selectedKey === 'category' && <AddCategory/>}
                   </ModalBody>
                   <ModalFooter>
-                      <Button color="danger" onClick={onClose}>
-                          Cancelar
-                      </Button>
-                      <Button color='success' isDisabled={!isValid} onClick={onClose} onPress={handleSubmit}>
-                          Finalizar
-                      </Button>
+                      <div className="flex w-full flex-row justify-around">
+
+                          <Button color="danger" variant='ghost' onClick={onClose}>
+                              Cancelar
+                          </Button>
+                          <Button color='success' variant='shadow' isDisabled={!isValid} onClick={onClose} onPress={handleSubmit}>
+                              Finalizar
+                          </Button>
+                      </div>
                   </ModalFooter>
               </ModalContent>
           </Modal>

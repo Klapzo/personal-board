@@ -26,15 +26,23 @@ const MainTable = () => {
     fetch()
   }, [])
   return (
-      <div className='flex flex-col h-full  gap-3 w-[70%] my-10'>
+      <div className='flex flex-col h-[150%] mb-64 gap-3 w-80  md:w-[1000px] my-10'>
           <MainModal/>
 
           <Table
-
+          selectionMode='multiple'
           className='transaction-colors'
           aria-label="Tabla de movimientos" >
               <TableHeader columns={columns} >
-                  {(column) => <TableColumn allowsSorting={column.sortable} key={column.uid} align={column.center ? 'center' : 'start'}>{column.name}</TableColumn>}
+                  {(column) => <TableColumn
+                  allowsSorting={column.sortable}
+                  key={column.uid}
+                  align={column.center ? 'center' : 'end'}
+                  className='text-center'
+                  width={column.width}
+                  >
+                      {column.name}
+                  </TableColumn>}
               </TableHeader>
               <TableBody isLoading={isLoading} loadingContent={<CircularProgress aria-label='loading' />} emptyContent={isLoading || (session ? 'Agregá movimientos con el botón de +' : 'debes estar logueado para agregar movimientos')} items={transactions}>
 
