@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Doughnut } from 'react-chartjs-2'
+import { Pie } from 'react-chartjs-2'
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js'
 import { useTransaction } from '../context/TransactionProvider'
 
@@ -32,19 +32,19 @@ function Chart () {
 
   return (
       <div>
-          <Doughnut
-    data={data}
-    options={ {
-      responsive: true,
-      plugins: {
-        legend: {
-          position: 'bottom'
-        }
+          <Pie
+          data={data}
+          options={ {
+            responsive: true,
+            plugins: {
+              legend: {
+                position: 'bottom'
+              }
 
-      }
-    }}
+            }
+          }}
 
-    />
+          />
       </div>
   )
 }
