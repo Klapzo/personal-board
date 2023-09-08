@@ -76,7 +76,6 @@ const TransactionProvider = ({ children }) => {
     setTransactions(transactionObj)
     setIsLoading(false)
   }
-
   async function updateQuantities () {
     const data = await getQuantities()
     const quantitiesObj = { Gasto: 0, Ahorro: 0, Ingreso: 0, Inversión: 0, Balance: 0 }
@@ -106,7 +105,6 @@ const TransactionProvider = ({ children }) => {
         setCurrency,
         quantity: state.quantity,
         setQuantity,
-        categoryList: state.categoryList,
         selectedCategories: state.selectedCategories,
         setSelectedCategories,
         activeType: state.activeType,
