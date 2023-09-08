@@ -1,6 +1,6 @@
 import React from 'react'
 import { useTransaction } from '../context/TransactionProvider'
-import { Card, CardBody, CardHeader, Divider } from '@nextui-org/react'
+import { Card, CardBody, CardHeader } from '@nextui-org/react'
 
 const BalanceCard = () => {
   const { quantities } = useTransaction()
