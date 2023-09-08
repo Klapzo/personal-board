@@ -17,13 +17,12 @@ const QuantityInput = () => {
           <Input
             value={quantity}
             onChange={e => setQuantity(e.target.value)}
-            isRequired
             label="Monto Total"
             placeholder="0.00"
             labelPlacement="outside"
             startContent={
                 <div className="pointer-events-none flex items-center">
-                    <span className="text-default-400 text-small">{currencySymbolMap[currency]}</span>
+                    <span className="text-primary-300 text-small">{currencySymbolMap[currency]}</span>
                 </div>
         }
         endContent={

@@ -3,7 +3,7 @@ export const initialState = {
   isLoading: true,
   activeType: '',
   selectedCategories: new Set([]),
-  categoryList: ['cariñosas', 'fijos', 'pizzaM', 'nose', 'compu', 'cafe'],
+  categoryList: ['Comida', 'Entretenimiento', 'Salud', 'Transporte', 'Familia', 'Mascotas', 'Ropa', 'Café'],
   quantity: '',
   currency: 'ARS',
   inputDate: new Date(),

@@ -34,12 +34,15 @@ const MainModal = () => {
                       {selectedKey === 'category' && <AddCategory/>}
                   </ModalBody>
                   <ModalFooter>
-                      <Button color="danger" onClick={onClose}>
-                          Cancelar
-                      </Button>
-                      <Button color='success' isDisabled={!isValid} onClick={onClose} onPress={handleSubmit}>
-                          Finalizar
-                      </Button>
+                      <div className="flex w-full flex-row justify-around">
+
+                          <Button color="danger" variant='ghost' onClick={onClose}>
+                              Cancelar
+                          </Button>
+                          <Button color='success' variant='shadow' isDisabled={!isValid} onClick={onClose} onPress={handleSubmit}>
+                              Finalizar
+                          </Button>
+                      </div>
                   </ModalFooter>
               </ModalContent>
           </Modal>
