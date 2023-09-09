@@ -2,6 +2,7 @@ import React, { createContext, useContext, useEffect, useReducer, useState } fro
 import { AddTransaction, deleteTransaction, getAllTransactions, getQuantities } from '../utils/fetchDatabase'
 import { initialState, reducer } from '../reducers/Transaction'
 import { useAuth } from '../hooks/useAuth'
+import { createTransactionObject } from '../utils/createTransactionObject'
 
 export const AddTransactionContext = createContext()
 
@@ -23,7 +24,7 @@ const TransactionProvider = ({ children }) => {
 
   useEffect(() => {
     validateInputs()
-  }, [state.name, state.activeType, state.selectedCategories, state.quantity])
+  }, [state.name, state.activeType, state.quantity])
 
   function validateInputs () {
     if (state.activeType && state.selectedCategories && state.quantity) setIsValid(true)
@@ -61,18 +62,7 @@ const TransactionProvider = ({ children }) => {
 
   async function getData () {
     const result = await getAllTransactions()
-    const transactionObj = result.map(movimiento => {
-      movimiento.categories = movimiento.categories.map((item) => ({
-        key: item,
-        label: item
-      }))
-      return movimiento
-    })
-    transactionObj.sort((a, b) => {
-      const da = new Date(a.date)
-      const db = new Date(b.date)
-      return db - da
-    })
+    const transactionObj = createTransactionObject(result)
     setTransactions(transactionObj)
     setIsLoading(false)
   }
@@ -92,10 +82,12 @@ const TransactionProvider = ({ children }) => {
     quantitiesObj.Balance = quantitiesObj.Ingreso - (quantitiesObj['Inversión'] + quantitiesObj.Gasto + quantitiesObj.Ahorro)
     setQuantities(quantitiesObj)
   }
+  const defaultCategoryList = ['Comida', 'Entretenimiento', 'Salud', 'Transporte', 'Familia', 'Mascotas', 'Ropa', 'Café']
 
   return (
       <AddTransactionContext.Provider value={{
         quantities,
+        categoryList: defaultCategoryList,
         isLoading: state.isLoading,
         setIsLoading,
         isValid: state.isValid,
