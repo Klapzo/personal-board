@@ -16,7 +16,7 @@ const MainModal = () => {
       <div className='w-full '>
           <Button isDisabled={!session} onPress={onOpen} color="primary" endContent={<FaPlus/>}>Agregar movimiento</Button>
 
-          <Modal size="xs" className='h-[36em]' isOpen={isOpen} onOpenChange={onOpenChange}>
+          <Modal size="xs" className='h-[36em] overflow-y-auto scrollbar-hide' isOpen={isOpen} onOpenChange={onOpenChange}>
               <ModalContent>
                   <ModalHeader className='flex gap-2 flex-col items-center'>
 
@@ -36,7 +36,7 @@ const MainModal = () => {
                   <ModalFooter>
                       <div className="flex w-full flex-row justify-around">
 
-                          <Button color="danger" variant='ghost' onClick={onClose}>
+                          <Button color="danger" variant='shadow' onClick={onClose}>
                               Cancelar
                           </Button>
                           <Button color='success' variant='shadow' isDisabled={!isValid} onClick={onClose} onPress={handleSubmit}>
