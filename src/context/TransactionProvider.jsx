@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useReducer, useState } from 'react'
-import { AddTransaction, deleteTransaction, getAllTransactions, getQuantities } from '../utils/fetchDatabase'
+import { AddTransaction, deleteTransaction, getAllTransactions, getQuantities, getuserCategories } from '../utils/fetchDatabase'
 import { initialState, reducer } from '../reducers/Transaction'
 import { useAuth } from '../hooks/useAuth'
 import { createTransactionObject } from '../utils/createTransactionObject'
@@ -22,12 +22,21 @@ const TransactionProvider = ({ children }) => {
 
   const [quantities, setQuantities] = useState({})
 
+  const [userCategoryList, setUserCategoryList] = useState(state.defaultCategories)
   useEffect(() => {
     validateInputs()
-  }, [state.name, state.activeType, state.quantity])
+  }, [state.activeType, state.quantity])
 
+  useEffect(() => {
+    const updateCategories = async () => {
+      const userCategories = await getuserCategories()
+      console.log(userCategories)
+      setUserCategoryList(userCategories[0].category_list)
+    }
+    updateCategories()
+  }, [])
   function validateInputs () {
-    if (state.activeType && state.selectedCategories && state.quantity) setIsValid(true)
+    if (state.activeType && state.quantity) setIsValid(true)
     else setIsValid(false)
   }
 
@@ -45,12 +54,16 @@ const TransactionProvider = ({ children }) => {
     return newTransaction
   }
 
-  async function handleSubmit () {
+  async function handleTransactionSubmit () {
     setIsLoading(true)
     const transaction = createTransaction()
     await AddTransaction(transaction)
     await getData()
     setIsLoading(false)
+  }
+
+  async function handleCategorySubmit (categoryList) {
+    setUserCategoryList(categoryList)
   }
 
   async function handleDelete (id) {
@@ -82,12 +95,12 @@ const TransactionProvider = ({ children }) => {
     quantitiesObj.Balance = quantitiesObj.Ingreso - (quantitiesObj['Inversión'] + quantitiesObj.Gasto + quantitiesObj.Ahorro)
     setQuantities(quantitiesObj)
   }
-  const defaultCategoryList = ['Comida', 'Entretenimiento', 'Salud', 'Transporte', 'Familia', 'Mascotas', 'Ropa', 'Café']
 
   return (
       <AddTransactionContext.Provider value={{
         quantities,
-        categoryList: defaultCategoryList,
+        categoryList: userCategoryList,
+        setUserCategoryList,
         isLoading: state.isLoading,
         setIsLoading,
         isValid: state.isValid,
@@ -104,7 +117,8 @@ const TransactionProvider = ({ children }) => {
         name: state.name,
         setName,
         AddTransaction,
-        handleSubmit,
+        handleSubmit: handleTransactionSubmit,
+        handleCategorySubmit,
         handleDelete,
         getData,
         transactions: state.transactions,

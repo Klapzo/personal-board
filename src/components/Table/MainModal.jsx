@@ -1,14 +1,12 @@
 import React, { useState } from 'react'
-import AddTransaction from './AddTransaction/AddTransaction'
-import { Button, Divider, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Tab, Tabs, useDisclosure } from '@nextui-org/react'
-import { useTransaction } from '../../context/TransactionProvider'
+import AddTransactionModal from './AddTransaction/AddTransactionModal'
+import { Button, Divider, Modal, ModalContent, ModalHeader, Tab, Tabs, useDisclosure } from '@nextui-org/react'
 import { FaPlus } from 'react-icons/fa'
-import AddCategory from './AddCategory/AddCategory'
+import AddCategoryModal from './AddCategory/AddCategoryModal'
 import { useAuth } from '../../hooks/useAuth'
 
 const MainModal = () => {
   const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure()
-  const { handleSubmit, isValid } = useTransaction()
   const [selectedKey, setSelectedKey] = useState('transaction')
   const { session } = useAuth()
 
@@ -29,21 +27,9 @@ const MainModal = () => {
 
                   </ModalHeader>
                   <Divider />
-                  <ModalBody >
-                      {selectedKey === 'transaction' && <AddTransaction/>}
-                      {selectedKey === 'category' && <AddCategory/>}
-                  </ModalBody>
-                  <ModalFooter>
-                      <div className="flex w-full flex-row justify-around">
+                  {selectedKey === 'transaction' && <AddTransactionModal onClose={onClose}/>}
+                  {selectedKey === 'category' && <AddCategoryModal onClose={onClose}/>}
 
-                          <Button color="danger" variant='shadow' onClick={onClose}>
-                              Cancelar
-                          </Button>
-                          <Button color='success' variant='shadow' isDisabled={!isValid} onClick={onClose} onPress={handleSubmit}>
-                              Finalizar
-                          </Button>
-                      </div>
-                  </ModalFooter>
               </ModalContent>
           </Modal>
       </div>

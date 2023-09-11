@@ -1,20 +1,24 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useTransaction } from '../../../context/TransactionProvider'
-import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow, Input, Button, ScrollShadow } from '@nextui-org/react'
+import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow, Input, ModalBody } from '@nextui-org/react'
 import ActionsButtonGroup from './ActionsButtonGroup'
 import { useFieldArray, useForm } from 'react-hook-form'
 
 import PlusButton from '../../PlusButton'
-function AddCategory () {
-  const { categoryList } = useTransaction()
+import { addUserCategories } from '../../../utils/fetchDatabase'
+import DefaultModalFooter from '../DefaultModalFooter'
+import { useAuth } from '../../../hooks/useAuth'
+function AddCategoryModal () {
+  const { categoryList, setUserCategoryList } = useTransaction()
   const [newInput, setNewInput] = useState('')
+  const { session } = useAuth()
   const newInputRef = useRef()
-  const { register, control, reset, watch } = useForm({
+  const { register, control, watch } = useForm({
     defaultValues: {
       categories:
-        categoryList.map((category) => ({
-          category
-        }))
+      categoryList.map((category) => ({
+        category
+      }))
     }
   })
   const { fields, prepend, remove } = useFieldArray({
@@ -22,7 +26,6 @@ function AddCategory () {
     name: 'categories'
   })
   useEffect(() => {
-    console.log('focus')
     newInputRef.current.focus()
   }, [fields])
 
@@ -37,14 +40,30 @@ function AddCategory () {
     prepend({ category: newInput })
     setNewInput('')
   }
-  return (
-      <>
 
-          <div className='flex flex-row gap-4 w-full'>
-              <Input ref={newInputRef} type="text" value={newInput} onChange={e => setNewInput(e.target.value)} label="Añadir Categoría" size='md' labelPlacement='outside' placeholder='Nombre' />
-              <PlusButton isDisabled={!newInput.length} onClick={handleAddInput}/>
-          </div>
-          <ScrollShadow >
+  useEffect(() => {
+    if (controlledFields.length === 0) {
+      setUserCategoryList(['varios'])
+    } else {
+      const userCategories = controlledFields.map(categoryObj => (categoryObj.category))
+      setUserCategoryList(userCategories)
+    }
+  }, [watchFieldArray])
+  const handleCategorySubmit = () => {
+    const categoriesObject = [{
+      owner_id: session.user.id,
+      category_list: controlledFields.map(categoryObj => (categoryObj.category))
+    }]
+    addUserCategories(categoriesObject)
+  }
+  return (
+
+      <>
+          <ModalBody>
+              <div className='flex flex-row gap-4 w-full'>
+                  <Input ref={newInputRef} type="text" value={newInput} onChange={e => setNewInput(e.target.value)} label="Añadir Categoría" size='md' labelPlacement='outside' placeholder='Nombre' />
+                  <PlusButton isDisabled={!newInput.length} onClick={handleAddInput}/>
+              </div>
               <Table hideHeader aria-label="Categories table">
                   <TableHeader>
                       <TableColumn>NAME</TableColumn>
@@ -73,10 +92,11 @@ function AddCategory () {
                       )) }
                   </TableBody>
               </Table>
-          </ScrollShadow>
-
+              <DefaultModalFooter onSubmit={handleCategorySubmit} />
+          </ModalBody>
       </>
+
   )
 }
 
-export default AddCategory
+export default AddCategoryModal
