@@ -63,6 +63,7 @@ const TransactionProvider = ({ children }) => {
   }
 
   async function handleCategorySubmit (categoryList) {
+    setSelectedCategories(new Set([]))
     setUserCategoryList(categoryList)
   }
 

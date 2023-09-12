@@ -7,7 +7,7 @@ const CategorySelector = () => {
   const { selectedCategories, setSelectedCategories, categoryList } = useTransaction()
 
   useEffect(() => {
-    return setSelectedCategories('')
+    return setSelectedCategories(new Set([]))
   }, [])
 
   return (
@@ -24,7 +24,9 @@ const CategorySelector = () => {
       >
               {categoryList.map((category) => (
                   <SelectItem key={category} textValue={category} value={category}>
-                      {category}
+                      <p className="rounded-full text-center ">
+                          {category}
+                      </p>
                   </SelectItem>
               ))}
 
