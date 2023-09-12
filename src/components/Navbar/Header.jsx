@@ -47,7 +47,9 @@ export default function Header () {
                   }
               </NavbarItem>
               <NavbarItem>
-
+                  <Button variant='bordered' onPress={() => console.log(session)} type="submit" >
+                      ola
+                  </Button>
               </NavbarItem>
           </NavbarContent>
       </Navbar>
