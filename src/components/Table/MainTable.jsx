@@ -21,12 +21,12 @@ const MainTable = () => {
   const { session } = useAuth()
   useEffect(() => {
     async function fetch () {
-      getData()
+      await getData()
     }
     fetch()
   }, [])
   return (
-      <div className='flex flex-col h-[150%] mb-64 gap-3 w-80  md:w-[1000px] my-10'>
+      <div className='flex flex-col h-[150%] mb-64 gap-3 md:w-auto w-full my-10'>
           <MainModal/>
 
           <Table

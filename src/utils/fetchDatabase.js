@@ -1,6 +1,7 @@
 import supabase from './createSupabaseClient'
 
 export const AddTransaction = async (transaction) => {
+  console.log('AddTransaction')
   const { error } = await supabase
     .from('Movimientos')
     .insert(transaction)
@@ -9,6 +10,8 @@ export const AddTransaction = async (transaction) => {
 }
 
 export const getAllTransactions = async () => {
+  console.log('getAllTransactions')
+
   const { data: Movimientos, error } = await supabase
     .from('Movimientos')
     .select('*')
@@ -17,6 +20,8 @@ export const getAllTransactions = async () => {
 }
 
 export const deleteTransaction = async (id) => {
+  // console.log('deleteTransaction')
+
   const { error } = await supabase
     .from('Movimientos')
     .delete()
@@ -26,6 +31,8 @@ export const deleteTransaction = async (id) => {
 }
 
 export const getQuantities = async () => {
+  // console.log('getQuantities')
+
   const { data: Movimientos, error } = await supabase
     .from('Movimientos')
     .select('transaction_type,quantity')
@@ -33,6 +40,8 @@ export const getQuantities = async () => {
   return Movimientos
 }
 export const addUserCategories = async (categoryList) => {
+  // console.log('addUserCategories')
+
   const userCategories = await getuserCategories()
   if (userCategories === categoryList || userCategories.length === 0) return
   if (userCategories) updateCategoryList(categoryList)
@@ -46,6 +55,8 @@ export const addUserCategories = async (categoryList) => {
 }
 
 export const getuserCategories = async () => {
+  // console.log('getuserCategories')
+
   const { data: categoryList, error } = await supabase
     .from('user_categories')
     .select('category_list')
@@ -53,6 +64,8 @@ export const getuserCategories = async () => {
   return categoryList
 }
 const updateCategoryList = async (updatedList) => {
+  // console.log('updateCategoryList')
+
   const { data: newCategoryList, error } = await supabase
     .from('user_categories')
     .upsert(updatedList)

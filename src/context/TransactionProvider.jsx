@@ -30,7 +30,6 @@ const TransactionProvider = ({ children }) => {
   useEffect(() => {
     const updateCategories = async () => {
       const userCategories = await getuserCategories()
-      console.log(userCategories)
       setUserCategoryList(userCategories[0].category_list)
     }
     updateCategories()
@@ -58,8 +57,8 @@ const TransactionProvider = ({ children }) => {
     setIsLoading(true)
     const transaction = createTransaction()
     await AddTransaction(transaction)
+    await updateQuantities()
     await getData()
-    setIsLoading(false)
   }
 
   async function handleCategorySubmit (categoryList) {
@@ -71,13 +70,17 @@ const TransactionProvider = ({ children }) => {
     setIsLoading(true)
     await deleteTransaction(id)
     await getData()
+    await updateQuantities()
     setIsLoading(false)
   }
 
   async function getData () {
+    setIsLoading(true)
     const result = await getAllTransactions()
     const transactionObj = createTransactionObject(result)
     setTransactions(transactionObj)
+    await updateQuantities()
+
     setIsLoading(false)
   }
   async function updateQuantities () {

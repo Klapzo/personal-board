@@ -6,8 +6,8 @@ const BalanceCard = () => {
   const { quantities } = useTransaction()
   return (
       <Card
-      className="border-none bg-default-100/50 max-w-[610px]"
-      shadow="sm">
+      className="border-none bg-default-100/50 min-w-[250px] h-[100px] "
+      shadow="md">
           <CardHeader className='flex justify-around'>
               <span>
                   Ingresos
