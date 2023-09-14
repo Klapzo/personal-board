@@ -4,10 +4,11 @@ import { Badge } from '@nextui-org/react'
 function CategoryBadge ({ number }) {
   return (
       <Badge
-      isOneChar size="sm"
-    className=" mr-2 p-auto"
-    content={number}
-    disableOutline
+      isOneChar
+      size="sm"
+      className=" mr-2 p-auto"
+      content={number}
+      disableOutline
     />
   )
 }

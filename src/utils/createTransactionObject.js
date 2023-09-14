@@ -1,5 +1,5 @@
 export const createTransactionObject = (transaction) => {
-  const transactionObj = transaction.map(movimiento => {
+  const transactionObj = transaction.map((movimiento) => {
     movimiento.categories = movimiento.categories.map((item) => ({
       key: item,
       label: item

@@ -22,10 +22,7 @@ export const getAllTransactions = async () => {
 export const deleteTransaction = async (id) => {
   // console.log('deleteTransaction')
 
-  const { error } = await supabase
-    .from('Movimientos')
-    .delete()
-    .eq('id', id)
+  const { error } = await supabase.from('Movimientos').delete().eq('id', id)
 
   error && console.error(error)
 }

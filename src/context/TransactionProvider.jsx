@@ -1,5 +1,17 @@
-import React, { createContext, useContext, useEffect, useReducer, useState } from 'react'
-import { AddTransaction, deleteTransaction, getAllTransactions, getQuantities, getuserCategories } from '../utils/fetchDatabase'
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useReducer,
+  useState
+} from 'react'
+import {
+  AddTransaction,
+  deleteTransaction,
+  getAllTransactions,
+  getQuantities,
+  getuserCategories
+} from '../utils/fetchDatabase'
 import { initialState, reducer } from '../reducers/Transaction'
 import { useAuth } from '../hooks/useAuth'
 import { createTransactionObject } from '../utils/createTransactionObject'
@@ -11,18 +23,28 @@ const TransactionProvider = ({ children }) => {
   const { session } = useAuth()
 
   const setName = (name) => dispatch({ type: 'SET_NAME', payload: name })
-  const setIsLoading = (isLoading) => dispatch({ type: 'SET_IS_LOADING', payload: isLoading })
-  const setActiveType = (activeType) => dispatch({ type: 'SET_ACTIVE_TYPE', payload: activeType })
-  const setSelectedCategories = (selectedCategories) => dispatch({ type: 'SET_SELECTED_CATEGORIES', payload: selectedCategories })
-  const setQuantity = (quantity) => dispatch({ type: 'SET_QUANTITY', payload: quantity })
-  const setCurrency = (currency) => dispatch({ type: 'SET_CURRENCY', payload: currency })
-  const setInputDate = (inputDate) => dispatch({ type: 'SET_INPUT_DATE', payload: inputDate })
-  const setIsValid = (isValid) => dispatch({ type: 'SET_IS_VALID', payload: isValid })
-  const setTransactions = (transactions) => dispatch({ type: 'SET_TRANSACTIONS', payload: transactions })
+  const setIsLoading = (isLoading) =>
+    dispatch({ type: 'SET_IS_LOADING', payload: isLoading })
+  const setActiveType = (activeType) =>
+    dispatch({ type: 'SET_ACTIVE_TYPE', payload: activeType })
+  const setSelectedCategories = (selectedCategories) =>
+    dispatch({ type: 'SET_SELECTED_CATEGORIES', payload: selectedCategories })
+  const setQuantity = (quantity) =>
+    dispatch({ type: 'SET_QUANTITY', payload: quantity })
+  const setCurrency = (currency) =>
+    dispatch({ type: 'SET_CURRENCY', payload: currency })
+  const setInputDate = (inputDate) =>
+    dispatch({ type: 'SET_INPUT_DATE', payload: inputDate })
+  const setIsValid = (isValid) =>
+    dispatch({ type: 'SET_IS_VALID', payload: isValid })
+  const setTransactions = (transactions) =>
+    dispatch({ type: 'SET_TRANSACTIONS', payload: transactions })
 
   const [quantities, setQuantities] = useState({})
 
-  const [userCategoryList, setUserCategoryList] = useState(state.defaultCategories)
+  const [userCategoryList, setUserCategoryList] = useState(
+    state.defaultCategories
+  )
   useEffect(() => {
     validateInputs()
   }, [state.activeType, state.quantity])
@@ -41,15 +63,17 @@ const TransactionProvider = ({ children }) => {
 
   function createTransaction () {
     const categoriesArray = Array.from(state.selectedCategories)
-    const newTransaction = [{
-      name: state.name,
-      transaction_type: state.activeType,
-      categories: categoriesArray,
-      quantity: state.quantity,
-      currency: state.currency,
-      date: state.inputDate.toISOString().split('T')[0],
-      owner_id: session.user.id
-    }]
+    const newTransaction = [
+      {
+        name: state.name,
+        transaction_type: state.activeType,
+        categories: categoriesArray,
+        quantity: state.quantity,
+        currency: state.currency,
+        date: state.inputDate.toISOString().split('T')[0],
+        owner_id: session.user.id
+      }
+    ]
     return newTransaction
   }
 
@@ -85,7 +109,13 @@ const TransactionProvider = ({ children }) => {
   }
   async function updateQuantities () {
     const data = await getQuantities()
-    const quantitiesObj = { Gasto: 0, Ahorro: 0, Ingreso: 0, Inversión: 0, Balance: 0 }
+    const quantitiesObj = {
+      Gasto: 0,
+      Ahorro: 0,
+      Ingreso: 0,
+      Inversión: 0,
+      Balance: 0
+    }
     data.forEach((transaction) => {
       const key = transaction.transaction_type
       const value = transaction.quantity
@@ -96,12 +126,15 @@ const TransactionProvider = ({ children }) => {
         quantitiesObj[key] = value
       }
     })
-    quantitiesObj.Balance = quantitiesObj.Ingreso - (quantitiesObj['Inversión'] + quantitiesObj.Gasto + quantitiesObj.Ahorro)
+    quantitiesObj.Balance =
+      quantitiesObj.Ingreso -
+      (quantitiesObj['Inversión'] + quantitiesObj.Gasto + quantitiesObj.Ahorro)
     setQuantities(quantitiesObj)
   }
 
   return (
-      <AddTransactionContext.Provider value={{
+      <AddTransactionContext.Provider
+      value={{
         quantities,
         categoryList: userCategoryList,
         setUserCategoryList,
@@ -128,7 +161,8 @@ const TransactionProvider = ({ children }) => {
         transactions: state.transactions,
         updateQuantities,
         setTransactions
-      }}>
+      }}
+    >
           {children}
       </AddTransactionContext.Provider>
   )

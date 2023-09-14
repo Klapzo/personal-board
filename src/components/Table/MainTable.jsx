@@ -26,11 +26,10 @@ const MainTable = () => {
     fetch()
   }, [])
   return (
-      <div className='flex flex-col h-[150%] mb-64 gap-3 md:w-auto w-full my-10'>
+      <div className='flex gap-y-3 flex-col justify-center items-center w-[95%] md:w-auto mx-0 p-0 my-10'>
           <MainModal/>
 
           <Table
-          selectionMode='multiple'
           className='transaction-colors'
           aria-label="Tabla de movimientos" >
               <TableHeader columns={columns} >

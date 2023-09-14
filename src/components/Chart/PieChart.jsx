@@ -10,16 +10,23 @@ const PieChart = () => {
   const [quantitiesDataset, setQuantitiesDataset] = useState([0, 0, 0])
 
   useEffect(() => {
-    setQuantitiesDataset([quantities.Gasto, quantities.Ahorro, quantities['Inversión']])
+    setQuantitiesDataset([
+      quantities.Gasto,
+      quantities.Ahorro,
+      quantities['Inversión']
+    ])
   }, [quantities])
 
   const colorMap = {
-    background: { gastos: '#5f2b1f', ahorros: '#251238', inversiones: '#004c3d' },
+    background: {
+      gastos: '#5f2b1f',
+      ahorros: '#251238',
+      inversiones: '#004c3d'
+    },
     border: { gasto: '#f39882', ahorro: '#8e6daf', inversion: '#01fac8' }
   }
 
   const data = {
-
     labels: Object.keys(colorMap.background),
     datasets: [
       {
@@ -34,17 +41,16 @@ const PieChart = () => {
 
   return (
       <Pie
-          data={data}
-          options={ {
-            responsive: true,
-            plugins: {
-              legend: {
-                position: 'bottom'
-              }
-
-            }
-          }}
-          />
+      data={data}
+      options={{
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'bottom'
+          }
+        }
+      }}
+    />
   )
 }
 
