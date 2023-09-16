@@ -6,17 +6,16 @@ import { BiTrashAlt } from 'react-icons/bi'
 
 const ActionsButtonGroup = ({ isDisabled, onEdit, onDelete }) => {
   return (
-      <div className='flex flex-row'>
-          <ButtonGroup size="sm" variant='light'>
+      <div className="flex flex-row">
+          <ButtonGroup size="sm" variant="light">
               {/*
               <Button variant={isDisabled && 'shadow'} isIconOnly onPress={onEdit}>
                   <ActionsDropdownItem className="flex text-2xl flex-shrink-0" color="default-400" icon={<BiEdit />} />
               </Button> */}
 
               <Button onPress={onDelete} isIconOnly>
-                  <ActionsDropdownItem color="danger" icon={<BiTrashAlt/>} />
+                  <ActionsDropdownItem color="danger" icon={<BiTrashAlt />} />
               </Button>
-
           </ButtonGroup>
       </div>
   )

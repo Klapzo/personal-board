@@ -4,8 +4,14 @@ import { FaPlus } from 'react-icons/fa'
 
 const PlusButton = ({ isDisabled, onClick }) => {
   return (
-      <Button onPress={onClick} isDisabled={isDisabled} className='flex self-end' isIconOnly color='primary' >
-          <FaPlus/>
+      <Button
+      onPress={onClick}
+      isDisabled={isDisabled}
+      className="flex self-end"
+      isIconOnly
+      color="primary"
+    >
+          <FaPlus />
       </Button>
   )
 }

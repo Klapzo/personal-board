@@ -1,21 +1,38 @@
-@import '@fontsource/argentum-sans';
+@import "@fontsource/argentum-sans";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root, #root, #root>div {
-    width: 100%;
-    height: 100%;
-    color-scheme: dark;
-    background: no-repeat linear-gradient(#2d2d2d, #121212 );
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
+#root,
+#root > div {
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  color-scheme: dark;
+  background-size: cover;
+  -ms-overflow-style: none; 
+  scrollbar-width: none;
 }
 body {
-    color-scheme: dark;
-    width: 100%;
-    height: 100%;
-    color: #fdf2de;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  min-height: 100vh;
+  min-width: 100vw;
+  background: no-repeat linear-gradient(#2d2d2d, #121212);
+  overflow-x: hidden;
+  -ms-overflow-style: none; 
+  scrollbar-width: none;
+  color: #fdf2de;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+body::-webkit-scrollbar {
+  display: none;
 }

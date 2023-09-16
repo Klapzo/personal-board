@@ -14,7 +14,7 @@ const AddTransactionModal = ({ onClose }) => {
   return (
       <>
           <ModalBody>
-              <div className='flex flex-col gap-y-2 items-start'>
+              <div className="flex flex-col gap-y-2 items-start">
                   <QuantityInput />
                   <TypeSelector />
                   <CategorySelector />
@@ -23,13 +23,12 @@ const AddTransactionModal = ({ onClose }) => {
               </div>
           </ModalBody>
           <DefaultModalFooter
-          onCancel={onClose}
-          onClose={onClose}
-          isSubmitDisabled={!isValid}
-          onSubmit={handleSubmit}/>
-
+        onCancel={onClose}
+        onClose={onClose}
+        isSubmitDisabled={!isValid}
+        onSubmit={handleSubmit}
+      />
       </>
-
   )
 }
 

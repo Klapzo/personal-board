@@ -12,10 +12,7 @@ export function useAuth () {
 
   async function signInWithGoogle () {
     const { error } = await supabase.auth.signInWithOAuth({
-      provider: 'google',
-      options: {
-        redirectTo: 'http://localhost:5173/dashboard'
-      }
+      provider: 'google'
     })
     error && console.error(error)
   }

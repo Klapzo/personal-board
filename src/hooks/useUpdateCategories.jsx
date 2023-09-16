@@ -11,12 +11,12 @@ const useUpdateCategories = () => {
   const [newInput, setNewInput] = useState('')
   const newInputRef = useRef()
 
-  const { register, control, watch } = useForm({
+  const { register, control, watch, setFocus } = useForm({
     defaultValues: {
-      categories:
-      categoryList.map((category) => ({
+      categories: categoryList.map((category) => ({
         category
       }))
+
     }
   })
   const { fields, prepend, remove } = useFieldArray({
@@ -32,34 +32,43 @@ const useUpdateCategories = () => {
   })
 
   const handleAddInput = () => {
-    prepend({ category: newInput })
+    prepend({ category: newInput }, { shouldFocus: false })
     setNewInput('')
+    handleCategorySubmit()
   }
 
   useEffect(() => {
-    newInputRef.current.focus()
+    setFocus()
     if (controlledFields.length === 0) {
-      setUserCategoryList(['varios'])
+      setUserCategoryList([''])
     } else {
-      const userCategories = controlledFields.map(categoryObj => (categoryObj.category))
+      const userCategories = controlledFields.map(
+        (categoryObj) => categoryObj.category
+      )
       setUserCategoryList(userCategories)
     }
   }, [watchFieldArray])
 
   const handleCategorySubmit = () => {
-    const categoriesObject = [{
-      owner_id: session.user.id,
-      category_list: controlledFields.map(categoryObj => (categoryObj.category))
-    }]
+    const categoriesObject = [
+      {
+        owner_id: session.user.id,
+        category_list: controlledFields.map(
+          (categoryObj) => categoryObj.category
+        )
+      }
+    ]
     addUserCategories(categoriesObject)
   }
 
   const resetCategories = () => {
-    const defaultCategories = initialState.defaultCategories.map((category) => ({
-      category
-    }))
+    const defaultCategories = initialState.defaultCategories.map(
+      (category) => ({
+        category
+      })
+    )
 
-    defaultCategories.forEach(category => prepend(category))
+    defaultCategories.forEach((category) => prepend(category))
   }
 
   return {
