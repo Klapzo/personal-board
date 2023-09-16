@@ -40,6 +40,7 @@ const PieChart = () => {
   }
 
   return (
+
       <Pie
       data={data}
       options={{
@@ -50,7 +51,7 @@ const PieChart = () => {
           }
         }
       }}
-    />
+      />
   )
 }
 

@@ -12,7 +12,14 @@ export default function Header () {
   const { signInWithGoogle, signOut, session } = useAuth()
   const avatarUrl = session?.user.user_metadata.avatar_url
   return (
-      <Navbar className="w-[100%]" position="static">
+      <Navbar className="bg-zinc-900 rounded-b-xl w-full" position="static">
+
+          <NavbarContent justify="start">
+              <NavbarItem className="hidden md:flex ">
+                  <h1 className='font-argentum font-extrabold capitalize font-3xl w-auto'>Expense Tracker</h1>
+              </NavbarItem>
+
+          </NavbarContent>
           <NavbarContent justify="end">
               <NavbarItem className="flex">
                   {!session
